@@ -1,51 +1,62 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [Username, setUsername] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const validEmail = 'test@gmail.com';
-    const validPassword = 'password';
+    const validUsername = "Test";
 
-    if (email === validEmail && password === validPassword) {
-      localStorage.setItem('auth', 'true');
-      router.push('/dashboard');
+    if (Username === validUsername) {
+      localStorage.setItem("auth", "true");
+      router.push("/");
     } else {
-      setError('Invalid credentials');
+      setError("Invalid credentials");
     }
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <form onSubmit={handleLogin}>
-        <h1>Login</h1>
         <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+          type="Username"
+          value={Username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
           required
-          style={{ display: 'block', marginBottom: '10px', padding: '10px', width: '100%' }}
+          style={{
+            display: "block",
+            marginBottom: "10px",
+            padding: "10px",
+            width: "100%",
+            border: "1px solid black",
+          }}
         />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-          style={{ display: 'block', marginBottom: '10px', padding: '10px', width: '100%' }}
-        />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit" style={{ padding: '10px 20px', width: '100%' }}>
-          Login
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "10px",
+            border: "1px solid black",
+            fontFamily: "700",
+            background: "lightblue",
+          }}
+        >
+          Connect Telegram
         </button>
       </form>
     </div>
