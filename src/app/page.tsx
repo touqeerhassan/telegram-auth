@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [Username, setUsername] = useState("TestUser");
+  const [Username, setUsername] = useState<string>();
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem("auth");
     if (!isAuthenticated) {
       router.push("/login");
     }
+    setUsername("TestUser")
   }, [router]);
 
   const handleLogout = () => {
@@ -29,9 +30,7 @@ export default function DashboardPage() {
         flexDirection: "column",
       }}
     >
-      <div>
-        <p>@{Username}</p>
-      </div>
+      <p style={{fontWeight:'bold', fontSize:'32px'}}>Hi @{Username}</p>
       <button
         onClick={handleLogout}
         style={{ marginTop: "20px", padding: "10px 20px" }}

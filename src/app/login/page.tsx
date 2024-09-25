@@ -2,16 +2,17 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import TelegramLoginButton, { TelegramUser } from "telegram-login-button";
 
 export default function LoginPage() {
-  const [Username, setUsername] = useState("");
-  const [error, setError] = useState("");
+  const [Username, setUsername] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const validUsername = "Test";
+    const validUsername = "TestUser";
 
     if (Username === validUsername) {
       localStorage.setItem("auth", "true");
@@ -41,23 +42,17 @@ export default function LoginPage() {
             display: "block",
             marginBottom: "10px",
             padding: "10px",
+            borderRadius: "100px",
             width: "100%",
-            border: "1px solid black",
+            border: "1px solid gray",
+            outline: "none",
           }}
         />
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            border: "1px solid black",
-            fontFamily: "700",
-            background: "lightblue",
-          }}
-        >
-          Connect Telegram
-        </button>
+        <TelegramLoginButton
+          botName="Test_Devaxl_Bot"
+          dataOnauth={(user: TelegramUser) => console.log(user)}
+        />
       </form>
     </div>
   );
