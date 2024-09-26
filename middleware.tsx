@@ -2,13 +2,16 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const isAuthenticated = request.cookies.get("auth");
+  const authCookie = request.cookies.get("auth");
+  const validUsername = request.cookies.get("validUsername");
 
-  if (!isAuthenticated && request.url.includes("/")) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  if (!authCookie || validUsername !== process.env.NEXT_PUBLIC_HARDCODED_USER) {
+    if (request.nextUrl.pathname !== "/login") {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
   }
 
-  if (isAuthenticated && request.url.includes("/login")) {
+  if (authCookie && request.nextUrl.pathname === "/login") {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -16,5 +19,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/"],
+  matcher: ["/", "/login"],
 };
